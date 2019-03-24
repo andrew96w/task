@@ -37,23 +37,23 @@ $arComponentParameters = array(
 	),
 	"PARAMETERS" => array(
 		"AJAX_MODE" => array(),
-		/*"IBLOCK_TYPE" => array(
+		"IBLOCK_TYPE" => array(
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("T_IBLOCK_DESC_LIST_TYPE"),
-			"TYPE" => "STRING",
-			"VALUES" => "news",//$arTypesEx,
+			"TYPE" => "LIST",
+			"VALUES" => $arTypesEx,
 			"DEFAULT" => "news",
 			"REFRESH" => "Y",
 		),
 		"IBLOCK_ID" => array(
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("T_IBLOCK_DESC_LIST_ID"),
-			"TYPE" => "STRING",
-			"VALUES" => '={$_REQUEST["ID"]}',//$arIBlocks,
+			"TYPE" => "LIST",
+			"VALUES" => $arIBlocks,
 			"DEFAULT" => '={$_REQUEST["ID"]}',
 			"ADDITIONAL_VALUES" => "Y",
 			"REFRESH" => "Y",
-		),*/
+		),
 		"NEWS_COUNT" => array(
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("T_IBLOCK_DESC_LIST_CONT"),
@@ -76,15 +76,15 @@ $arComponentParameters = array(
 			"VALUES" => $arSorts,
 			"ADDITIONAL_VALUES" => "Y",
 		),
-		//"FIELD_CODE" => CIBlockParameters::GetFieldCode(GetMessage("IBLOCK_FIELD"), "DATA_SOURCE"),
-		/*"PROPERTY_CODE" => array(
+		"FIELD_CODE" => CIBlockParameters::GetFieldCode(GetMessage("IBLOCK_FIELD"), "DATA_SOURCE"),
+		"PROPERTY_CODE" => array(
 			"PARENT" => "DATA_SOURCE",
 			"NAME" => GetMessage("T_IBLOCK_PROPERTY"),
 			"TYPE" => "LIST",
 			"MULTIPLE" => "Y",
 			"VALUES" => $arProperty_LNS,
 			"ADDITIONAL_VALUES" => "Y",
-		),*/
+		),
 		"DETAIL_URL" => CIBlockParameters::GetPathTemplateParam(
 			"DETAIL",
 			"DETAIL_URL",
@@ -101,3 +101,6 @@ $arComponentParameters = array(
 		"CACHE_TIME"  =>  array("DEFAULT"=>36000000),
 	),
 );
+
+
+
