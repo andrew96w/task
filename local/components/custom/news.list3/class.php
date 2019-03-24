@@ -10,9 +10,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 class NewsCustomComponent extends CBitrixComponent
 {
-    public $res;
-    public $navComponentObject;
-    public $arComponentParameters;
+    private $res;
+    private $navComponentObject;
+
     protected function checkRequiredModules()
     {
         if (!Loader::includeModule('iblock')) {
@@ -52,26 +52,12 @@ class NewsCustomComponent extends CBitrixComponent
 
         $this->arParams["SORT_BY1"] = trim($this->arParams["SORT_BY1"]);
         if (strlen($this->arParams["SORT_BY1"]) <= 0)
-            $arParams["SORT_BY1"] = "ACTIVE_FROM";
+            $this->arParams["SORT_BY1"] = "ACTIVE_FROM";
     }
 
     private function getElements()
     {
-        $arSelect = /*array_merge($this->arParams["FIELD_CODE"],)*/ array(
-            "ID",
-            "IBLOCK_ID",
-            "IBLOCK_SECTION_ID",
-            "NAME",
-            "ACTIVE_FROM",
-            "TIMESTAMP_X",
-            "DETAIL_PAGE_URL",
-            "LIST_PAGE_URL",
-            "DETAIL_TEXT",
-            "DETAIL_TEXT_TYPE",
-            "PREVIEW_TEXT",
-            "PREVIEW_TEXT_TYPE",
-            "PREVIEW_PICTURE",
-        );
+        $arSelect = array();
         $arSort = array(
             $this->arParams["SORT_BY1"]=>$this->arParams["SORT_ORDER1"],
         );
@@ -82,7 +68,8 @@ class NewsCustomComponent extends CBitrixComponent
             "ACTIVE"=>"Y",
             ">=PROPERTY_RANK_NEWS2"=>$this->arParams["SORT_VAR"],
         );
-        $this->res = CIBlockElement::GetList($arSort, $arFilter, false, array("nPageSize" => 5/*$this->arParams["NEWS_COUNT"]*/), $arSelect);
+        $this->res = CIBlockElement::GetList($arSort, $arFilter, false,
+            array("nPageSize" => $this->arParams["NEWS_COUNT"]), $arSelect);
         $this->res->SetUrlTemplates($this->arParams["DETAIL_URL"], "", $this->arParams["IBLOCK_URL"]);
     }
 
@@ -121,23 +108,16 @@ class NewsCustomComponent extends CBitrixComponent
 
     public function executeComponent()
     {
-        Loader::includeModule('iblock');
-        $this->onPrepareComponentParams2();
         try {
             $this->checkRequiredModules();
-            $this->getElements();
-            $this->arResult = $this->onPrepareComponentResult();
+            Loader::includeModule('iblock');
         }
         catch(Exception $e) {
         }
+        $this->onPrepareComponentParams2();
+        $this->getElements();
+        $this->arResult = array_merge($this->arResult, $this->onPrepareComponentResult());
         $this->includeComponentTemplate();
-    }
-
-    public function __construct($component = null)
-    {
-        parent::__construct($component);
-
-        Localization\Loc::loadMessages(__FILE__);
     }
 }
 

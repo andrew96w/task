@@ -6,6 +6,7 @@
 /about/
 /store/
 /include/
+/local/test/
 *.tar
 *.tar.gz
 *.tmp
